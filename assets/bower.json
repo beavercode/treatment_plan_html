@@ -1,0 +1,12 @@
+{
+  "name": "treatment plan",
+  "version": "0.0.1",
+  "authors": [
+    "bbr <erobober@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [],
+  "dependencies": {
+    "bootstrap": "~3.3.4"
+  }
+}

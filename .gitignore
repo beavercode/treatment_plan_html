@@ -1,0 +1,30 @@
+# win image file caches
+Thumbs.db
+ehthumbs.db
+
+# win folder config file
+Desktop.ini
+
+# win recycle bin used on file shares
+$RECYCLE.BIN/
+
+# KDE directory preferences
+.directory
+
+# text editors temporary files such as emacs
+*~
+
+# jetbrains phpstorm
+.idea/
+
+# Sass
+.sass-cache/
+
+# composer && bower
+vendor/
+
+# app specific
+sessions/
+cache/
+docx/
+tools/

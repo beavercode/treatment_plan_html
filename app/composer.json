@@ -1,0 +1,25 @@
+{
+    "name": "treatment plan",
+    "description": "php 5.4+",
+    "authors": [
+        {
+            "name": "bbr",
+            "email": "erobober@gmail.com"
+        }
+    ],
+    "require": {
+        "aura/router": "2.*",
+        "dompdf/dompdf": "0.6.*",
+        "phpoffice/phpword": "dev-master"
+    },
+    "require-dev": {
+        "phpmd/phpmd" : "@stable",
+        "squizlabs/php_codesniffer": "2.*",
+        "phpunit/phpunit": "4.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "UTI\\": "src/"
+        }
+    }
+}
