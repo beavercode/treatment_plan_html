@@ -14,19 +14,14 @@
  *          url     todo
  *          pattern todo
  *          pass    todo
- *
- *
- * User: bbr
- * Date: 25/03/15
- * Time: 00:54
 */
 
 return [
     'app' => [
-        'uri_base' => '/',
-        'tpl' => 'tpl/',
-        'log' => 'storage/logs/',
+        'uri_base' => '/base/path/',
+        'tpl' => 'storage/tpl/',
         'session' => 'storage/sessions/',
+        'log' => 'storage/logs/',
         'docx' => 'storage/docx/',
         'pdf_in' => 'storage/pdf/',
         'pdf_out' => './../../pdf/'

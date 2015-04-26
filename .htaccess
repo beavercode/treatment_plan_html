@@ -1,13 +1,11 @@
-#RewriteEngine On
-#RewriteRule !^(pdf/|favicon\.ico|robots\.txt|sitemap\.xml|sitemap\.xml\.tgz) index.php [L]
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule .* index.php [L]
-
-RewriteEngine On
-RewriteBase /php/forms/
-RewriteRule !^(pdf/|favicon\.ico|robots\.txt|sitemap\.xml|sitemap\.xml\.tgz) index.php [L]
-RewriteRule ^$ index.php [QSA]
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php/$1 [QSA,L]
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    #for "/php/patterns/mvc/ololo/?key=val" use [QSA]
+#    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !^favicon\.ico
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+#    RewriteRule !^(pdf/|favicon\.ico|robots\.txt|sitemap\.xml|sitemap\.xml\.tgz) index.php [L]
+    RewriteRule ^(.*)$ index.php [L]
+</IfModule>

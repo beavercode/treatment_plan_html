@@ -1,10 +1,9 @@
 <?php
 /**
- * UTI, path to magic
- *
- * User: bbr
- * Date: 25/03/15
- * Time: 01:42
+ * You need to use --prefer-dist. And if there is a dist version for your repository it will be downloaded.
+ * You also can use --no-dev flag to exclude libraries that listed in require-dev section of packages.
+ * These libraries maybe useful only for development.
  */
 
-require 'UTI/bootstrap.php';
+//anti favicon.ico without apache
+($_SERVER['REQUEST_URI'] !== '/favicon.ico') ? require 'app/bootstrap.php' : die;

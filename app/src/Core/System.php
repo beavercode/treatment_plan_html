@@ -1,13 +1,7 @@
 <?php
-/**
- * UTI, path to magic
- *
- * User: bbr
- * Date: 25/03/15
- * Time: 00:42
- */
 
 namespace UTI\Core;
+
 use UTI\Lib\File;
 
 /**
@@ -18,7 +12,7 @@ use UTI\Lib\File;
  */
 class System
 {
-    public static $conf;
+    protected static $conf;
 
     /**
      * Write data to log file
@@ -45,12 +39,11 @@ class System
      * @return mixed
      * @throws AppException
      */
-    public static function loadData($fileName)
+    public static function loadConf($fileName)
     {
         if (! $data = include "$fileName") {
-            throw new AppException('can\'t include file.');
+            throw new AppException('Can\'t load file "' . $fileName . '""');
         }
-
         self::$conf = $data;
     }
 
@@ -60,11 +53,11 @@ class System
      * @param $fileName
      * @return string
      */
-    public static function loadTpl($fileName)
+    public static function loadData($fileName)
     {
         ob_start();
         if (! include "$fileName") {
-            throw new AppException('Can\'t load template "' . $fileName .'"');
+            throw new AppException('Can\'t load file(ob) "' . $fileName . '"');
         }
 
         return ob_get_clean();
@@ -79,26 +72,25 @@ class System
      */
     public static function redirect2Url($uri, $server, $schema = 'http://')
     {
-        header('Location: ' . $schema . $server['HTTP_HOST'] . '' . $server['PHP_SELF'] . $uri);
+        header('Location: ' . $schema . $server['HTTP_HOST'] . $uri);
     }
 
     /**
      * Rid of base path in URI string, e.g.:
      * example.com/base/path/controller/action/id   =>  example.com/controller/action/id
      *
-     * @param  string $uri          where to find
-     * @param  string $basePath     what to find
-     * @param  string $baseReplace  replacement string, default ''
+     * @param  string $uri where to find
+     * @param  string $uriBase what to find
+     * @param  string $baseReplace replacement string, default ''
      * @return string
      */
-    public static function getRealUri($uri, $basePath, $baseReplace = '')
+    public static function getRealUri($uri, $uriBase = '/', $baseReplace = '')
     {
-        if ($basePath === '' || $basePath === '/' || $basePath === 'index.php') {
-            return '/';
+        if ($uriBase === '/') {
+            return self::removeSlashes($uri);
         }
         $uri = self::removeSlashes($uri);
-        $realUri = substr_replace($uri, $baseReplace, strpos($uri, $basePath), strlen($basePath));
-        $realUri = '/' . $realUri . '/';
+        $realUri = '/' . substr_replace($uri, $baseReplace, strpos($uri, $uriBase), strlen($uriBase));
 
         return self::removeSlashes($realUri);
     }
@@ -112,5 +104,26 @@ class System
     public static function removeSlashes($str)
     {
         return preg_replace('~/+~', '/', $str);
+    }
+
+    /**
+     * Using array_reduce function (no user loops)
+     *
+     * This function is named fold in functional programming languages such as
+     * lisp, ocaml, haskell, and erlang. Python just calls it reduce.
+     *
+     * @param  string $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    public static function getConfig($key, $default = null)
+    {
+        return array_reduce(
+            explode('.', $key),
+            function ($result, $item) use ($default) {
+                return array_key_exists($item, $result) ? $result[$item] : $default;
+            },
+            self::$conf
+        );
     }
 }

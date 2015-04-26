@@ -1,15 +1,16 @@
 <?php
-/**
- * UTI, path to magic
- *
- * User: bbr
- * Date: 26/03/15
- * Time: 17:40
- */
-
 namespace UTI\Core;
 
-class Model
+abstract class Model
 {
 
+    /*
+        Модель обычно включает методы выборки данных, это могут быть:
+            > методы нативных библиотек pgsql или mysql;
+            > методы библиотек, реализующих абстракицю данных. Например, методы библиотеки PEAR MDB2;
+            > методы ORM;
+            > методы для работы с NoSQL;
+            > и др.
+    */
+    abstract public function getData();
 }

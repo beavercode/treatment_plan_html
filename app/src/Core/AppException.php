@@ -1,5 +1,4 @@
 <?php
-
 namespace UTI\Core;
 
 class AppException extends \RuntimeException

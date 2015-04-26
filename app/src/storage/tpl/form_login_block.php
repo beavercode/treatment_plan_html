@@ -1,11 +1,5 @@
 <?php
-/**
- * UTI, path to magic
- *
- * User: bbr
- * Date: 25/03/15
- * Time: 01:21
- */
+
 ?>
 
 <form method="post" action="" name="<?= $data->getName() ?>">
@@ -25,3 +19,4 @@
         </dd>
     </dl>
 </form>
+
