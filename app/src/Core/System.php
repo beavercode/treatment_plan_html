@@ -86,7 +86,7 @@ class System
      */
     public static function getRealUri($uri, $uriBase = '/', $baseReplace = '')
     {
-        if ($uriBase === '/') {
+        if ($uriBase === '/' || $uriBase === '') {
             return self::removeSlashes($uri);
         }
         $uri = self::removeSlashes($uri);

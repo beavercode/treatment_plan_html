@@ -32,44 +32,39 @@ class Router
     {
         # CREATING ROUTES
         //login
-        $this->router->add('login', '/')
-            ->addValues([
-                'controller' => 'Auth',
-                'action'     => 'index'
-            ]);
-        $this->router->add('Auth.login', '/login')
+        $this->router->add('auth.login', '/login')
             ->addValues([
                 'controller' => 'Auth',
                 'action'     => 'login'
             ]);
-        $this->router->add('Auth.logout', '/logout')
+        $this->router->add('auth.logout', '/logout')
             ->addValues([
                 'controller' => 'Auth',
                 'action'     => 'logout'
             ]);
         //plan
-        $this->router->add('plan', '/plan')
+        $this->router->add('plan.main', '/')
             ->addValues([
                 'controller' => 'Plan',
-                'action'     => 'index'
+                'action'     => 'main'
             ]);
-        $this->router->add('plan.add', '/plan/add')
+        $this->router->add('plan.add', '/add')
             ->addValues([
                 'controller' => 'Plan',
                 'action'     => 'add'
             ]);
-//        $this->router->add('plan.get', '/plan/get')
+//        $this->router->add('plan.get', '/get')
 //            ->addValues(array(
 //                'controller' => 'Plan',
 //                'action'     => 'get'
 //            ));
         //optional
-        $this->router->add('plan.show', '/plan/show')
+        $this->router->add('plan.show', '/show')
             ->addValues([
                 'controller' => 'Plan',
                 'action'     => 'show'
             ]);
-        $this->router->add('plan.show.name', '/plan/show/{name}')
+        $this->router->add('plan.show.name', '/show/{name}')
             ->addTokens([
                 'name' => '\w+'
             ])

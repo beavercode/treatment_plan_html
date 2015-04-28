@@ -1,8 +1,8 @@
 <?php
 namespace UTI\Controller;
 
-use \UTI\Core\Controller;
-use UTI\Core\View;
+use UTI\Core\Controller;
+use UTI\Core\System;
 use UTI\Model\PlanModel;
 
 /**
@@ -15,45 +15,36 @@ class PlanController extends Controller
     {
         parent::__construct($router);
         $this->model = new PlanModel();
-        $this->view = new View();
+        if (! $this->model->isLogged()) {
+            System::redirect2Url($this->router->generate('auth.login'), $_SERVER);
+        }
     }
 
-    public function index($params)
+    public function main($params)
     {
-        $data = $this->model->getData();
-        $this->view->render('form_login.tpl.php', 'main.tpl.php', $data);
+        //todo fill the form, show action menu
+        $this->view->render('form_plan.php', 'plan_template.php');
     }
 
     public function add($params)
     {
+        //todo generate digest pdf
         echo __METHOD__;
     }
 
+    // -------------- NEXT ACTIONS IS OPTIONAL -------------- //
+
     public function show($params)
     {
-        //  /plan/show
+        //generating links based on controller and action using aura/router
         $path = $this->router->generate('plan.show.name');
-        $href = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
-        $arr = $this->getShowData();
-        foreach ($arr as $key => $val) {
-            echo '<pre>#' . $key . ' - ' . $val . '</pre>(' . $href . ')';
-        }
+
+        echo htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
     }
 
     public function showByName($params)
     {
         echo __METHOD__;
         var_dump($params);
-    }
-
-    //data stub
-    private function getShowData()
-    {
-        return array(
-            'plan1' => 'Treatment plan number1',
-            'plan2' => 'Treatment plan number2',
-            'plan3' => 'Treatment plan number3',
-            'plan4' => 'Treatment plan number4'
-        );
     }
 }

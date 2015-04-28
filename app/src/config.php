@@ -14,19 +14,21 @@
  *          url     todo
  *          pattern todo
  *          pass    todo
-*/
+ */
 
 return [
     'app' => [
-        'uri_base' => '/base/path/',
-        'tpl' => 'storage/tpl/',
-        'session' => 'storage/sessions/',
-        'log' => 'storage/logs/',
-        'docx' => 'storage/docx/',
-        'pdf_in' => 'storage/pdf/',
-        'pdf_out' => './../../pdf/'
-    ],
-    'db'   => [
+        'uri_base' => '',
+        'tpl'      => 'storage/tpl/',
+        'session'  => 'storage/sessions/',
+        'log'      => 'storage/logs/',
+        'docx'     => 'storage/docx/',
+        'pdf_in'   => 'storage/pdf/',
+        'pdf_out'  => './../../pdf/'
+    ]
+];
+
+/*    'db'   => [
         'host' => 'localhost',
         'user' => 'gb_test_user',
         'pass' => 'w5wEWOz4wuLe',
@@ -45,7 +47,7 @@ return [
                     'max'     => 15
                 ]
             ],
-            'paswd' => [
+            'password' => [
                 'required' => true,
                 'validation' => [
                     'min'     => 3,
@@ -55,7 +57,7 @@ return [
             ]
         ]
     ]
-];
+];*/
 
 /*  full example
         'form_article' => [

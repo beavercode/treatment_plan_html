@@ -2,7 +2,7 @@
 namespace UTI\Controller;
 
 use UTI\Core\Controller;
-use UTI\Core\View;
+use UTI\Core\System;
 use UTI\Model\AuthModel;
 
 /**
@@ -14,26 +14,30 @@ class AuthController extends Controller
     public function __construct($router)
     {
         parent::__construct($router);
-
         $this->model = new AuthModel();
-        $this->view = new View();
     }
 
-    public function index($params)
+    /**
+     * Log in into the system and redirect to "plan.main"
+     */
+    public function login()
     {
-        // if logged in then go to uri '/plan' else $this->login action
-        $data = $this->model->isLogged();
-        //$data = $this->model->getData();
-        $this->view->render('form_login_block.php', 'login_template.php', $data);
+        $form = $this->model->processForm();
+
+        if ($this->model->isLogged()) {
+            System::redirect2Url($this->router->generate('plan.main'), $_SERVER);
+        }
+        $this->view->render('form_login.php', 'login_template.php', $form);
     }
 
-    public function login($params)
+    /**
+     * Log out of the system adn redirect to "auth.login"
+     */
+    public function logout()
     {
-        echo __METHOD__;
-    }
-
-    public function logout($params)
-    {
-        echo __METHOD__;
+        if ($this->model->isLogged()) {
+            $this->model->logOut();
+            System::redirect2Url($this->router->generate('auth.login'), $_SERVER);
+        }
     }
 }

@@ -1,16 +1,32 @@
 <?php
 namespace UTI\Core;
 
+use UTI\Lib\Session;
+
+/**
+ * Class Model
+ * @package UTI\Core
+ */
 abstract class Model
 {
+    /**
+     * @var \UTI\Lib\Session
+     */
+    protected $session;
 
-    /*
-        Модель обычно включает методы выборки данных, это могут быть:
-            > методы нативных библиотек pgsql или mysql;
-            > методы библиотек, реализующих абстракицю данных. Например, методы библиотеки PEAR MDB2;
-            > методы ORM;
-            > методы для работы с NoSQL;
-            > и др.
-    */
-    abstract public function getData();
+    public function __construct()
+    {
+        $this->session = new Session(APP_SES, 36000); //36000 - cookie duration for sessions equals 10 hours
+        $this->session->run();
+    }
+
+    /**
+     * Check logged or not
+     *
+     * @return bool
+     */
+    public function isLogged()
+    {
+        return $this->session->get('auth') === 'in';
+    }
 }

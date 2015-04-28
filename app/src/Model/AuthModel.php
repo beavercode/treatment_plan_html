@@ -2,36 +2,65 @@
 namespace UTI\Model;
 
 use UTI\Core\Model;
-use UTI\Core\System;
 use UTI\Lib\Form;
 
 class AuthModel extends Model
 {
-    public function getData()
+    /**
+     * Process form and set flag auth=in(logged in) if all is ok
+     * Otherwise form.validate populated with an errors
+     *
+     * @return Form
+     */
+    public function processForm()
     {
-        return 'data';
-    }
+        $form = new Form('form_login');
+        $userInfo = $this->getLoginDataFromDB();
 
-    public function isLogged()
-    {
-        // form handling, to model login
-        $loginForm = new Form('form_login');
-        if ($loginForm->isSubmit()) {
-            if (! $loginForm->getValue('login')) {
-                $loginForm->setInvalid('login', 'Field required!');
+        if ($form->isSubmit()) {
+            //login check
+            if (! $form->getValue('login')) {
+                $form->setInvalid('login', 'Field required.');
+            } elseif ($form->getValue('login') !== $userInfo['login']) {
+                $form->setInvalid('login', 'Wrong login value.');
             }
-            if (! $loginForm->getValue('paswd')) {
-                $loginForm->setInvalid('paswd', 'Field required');
+            //pass check
+            if (! $form->getValue('password')) {
+                $form->setInvalid('password', 'Field required.');
+            } elseif ((int)$form->getValue('password') !== $userInfo['password']) {
+                $form->setInvalid('password', 'Wrong password value.');
             }
-            if (! $loginForm->isInvalid()) {
-                //todo add session support
-                System::redirect2Url(URI_BASE . 'plan', $_SERVER);
+            //no errors there
+            if (! $form->isInvalid()) {
+                $this->session->set('auth', 'in');
             }
         } else {
-            $loginForm->setValue('login', '');
-            $loginForm->setValue('paswd', '');
+            //default value
+            $form->setValue('login', 'admin');
+            $form->setValue('password', '1');
         }
 
-        return $loginForm;
+        return $form;
+    }
+
+    /**
+     * Log out
+     */
+    public function logOut()
+    {
+        $this->session->halt();
+    }
+
+    /**
+     * DB stub, get user data
+     *
+     * @return array
+     */
+    protected function getLoginDataFromDB()
+    {
+        return [
+            'login'    => 'admin',
+            'password' => 1
+        ];
     }
 }
