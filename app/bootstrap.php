@@ -15,7 +15,8 @@ try {
     System::loadConf(APP_DIR . 'config.php');
     define('URI_BASE', System::getConfig('app.uri_base'));
     define('APP_TPL', APP_DIR . System::getConfig('app.tpl'));
-    define('APP_SES', APP_DIR . System::getConfig('app.session'));
+    define('APP_SES', APP_DIR . System::getConfig('app.session.dir'));
+    define('APP_SES_DUR', System::getConfig('app.session.duration'));
     define('APP_LOG', APP_DIR . System::getConfig('app.log'));
     define('APP_PDF_IN', APP_DIR . System::getConfig('app.pdf_in'));
     define('APP_PDF_OUT', APP_DIR . System::getConfig('app.pdf_out'));

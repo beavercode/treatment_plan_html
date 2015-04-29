@@ -13,15 +13,24 @@ namespace UTI\Lib;
  */
 class Session
 {
-    public function __construct($savePath = null, $duration = null)
+    protected $session;
+    protected $duration;
+
+    public function __construct($savePath = null, $duration = 1800)
     {
         if (null !== $savePath) {
             session_save_path($savePath);
         }
 
-        if (null !== $duration) {
-            ini_set('session.gc_maxlifetime', $duration);
+        if ($duration) {
+            //ini_set('session.gc_maxlifetime', $duration);
+            $this->duration = $duration;
         }
+    }
+
+    public function __invoke()
+    {
+
     }
 
     /**
@@ -31,7 +40,11 @@ class Session
      */
     public function run()
     {
-        return session_start();
+        $state = session_start();
+        $this->session =& $_SESSION;    // point by reference to $_SESSION global array
+        $this->correctDuration($this->duration);
+
+        return $state;
     }
 
     /**
@@ -40,13 +53,17 @@ class Session
      * @param $key
      * @return mixed
      */
-    public function get($key)
+    public function get($key = null)
     {
-        if (array_key_exists($key, $_SESSION)) {
-            return $_SESSION[$key];
+        /* FUN =)
+         * return null === $key
+            ? ($this->session ?: null)
+            : (array_key_exists($key, $this->session) ? $this->session[$key] : null);*/
+        if (null === $key) {
+            return $this->session ? : null;
         }
 
-        return null;
+        return isset($this->session[$key]) ? $this->session[$key] : null;
     }
 
     /**
@@ -58,7 +75,7 @@ class Session
      */
     public function set($key, $value)
     {
-        $_SESSION[$key] = $value;
+        $this->session[$key] = $value;
     }
 
     /**
@@ -68,7 +85,7 @@ class Session
      */
     public function halt()
     {
-        $_SESSION = [];
+        session_unset();
         if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
             setcookie(
@@ -82,5 +99,13 @@ class Session
             );
         }
         session_destroy();
+    }
+
+    protected function correctDuration($duration)
+    {
+        if ($this->get('last_seen') && (time() - $this->get('last_seen') > $duration)) {
+            $this->halt();
+        }
+        $this->set('last_seen', time());
     }
 }

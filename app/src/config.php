@@ -20,7 +20,10 @@ return [
     'app' => [
         'uri_base' => '',
         'tpl'      => 'storage/tpl/',
-        'session'  => 'storage/sessions/',
+        'session'  => [
+            'dir'      => 'storage/sessions/',
+            'duration' => 36000
+        ],
         'log'      => 'storage/logs/',
         'docx'     => 'storage/docx/',
         'pdf_in'   => 'storage/pdf/',

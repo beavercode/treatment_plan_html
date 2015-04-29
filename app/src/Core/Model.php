@@ -16,7 +16,7 @@ abstract class Model
 
     public function __construct()
     {
-        $this->session = new Session(APP_SES, 36000); //36000 - cookie duration for sessions equals 10 hours
+        $this->session = new Session(APP_SES, APP_SES_DUR);
         $this->session->run();
     }
 

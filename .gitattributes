@@ -1,5 +1,9 @@
-# Autodetect text files
+# Auto detect text files and perform LF normalization
 * text=auto
 
-# Force the following filetypes to have unix eols, so Windows does not break them
-*.* text eol=lf
+# Force the following file types to have unix eol, so Windows does not break them
+# *.* text eol=lf
+
+# files
+*.docx   diff=astextplain
+*.DOCX   diff=astextplain
