@@ -1,0 +1,173 @@
+'use strict';
+
+module.exports = function (grunt) {
+    var conf = {
+        buildDir: './../assets',
+        htmlDir: './../html',
+        sassDir: 'sass',
+        sassExt: 'scss',
+        browserPrefix: ['last 2 versions', '> 1%', 'ie 8'],
+        jsDir: 'js',
+        imgDir: 'img',
+        serverHost: '0.0.0.0',
+        serverPort: 7778,
+        serverBase: './../',
+        serverLiveReload: true
+    };
+
+    require('load-grunt-tasks')(grunt);
+
+    grunt.initConfig({
+        conf: conf,
+        pkg: grunt.file.readJSON('package.json'),
+
+        sass: {
+            dist: {
+                options: {
+                    // cssmin will minify later because of autoprefixer
+                    style: 'expanded',
+                    sourcemap: 'none'
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= conf.sassDir %>/',
+                    src: ['*.<%= conf.sassExt %>'],
+                    dest: '<%= conf.buildDir %>/css/',
+                    ext: '.css'
+                }]
+            }
+        },
+
+        autoprefixer: {
+            options: {
+                browsers: '<%= conf.browserPrefix %>'
+            },
+            dist: {
+                expand: true,
+                flatten: true,
+                src: '<%= conf.buildDir %>/css/*.css',
+                dest: '<%= conf.buildDir %>/css/'
+            }
+        },
+
+        cssmin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= conf.buildDir %>/css',
+                    src: ['*.css', '!*.min.css'],
+                    dest: '<%= conf.buildDir %>/css',
+                    ext: '.min.css'
+                }]
+            }
+        },
+
+        jshint: {
+            options: {
+                reporter: require('jshint-stylish')
+            },
+            beforeconcat: ['<%= conf.jsDir %>/*.js'],
+            afterconcat: ['<%= conf.buildDir %>/js/app.js']
+        },
+
+        concat: {
+            dist: {
+                src: [
+                    '<%= conf.jsDir %>/**/*.js'
+                ],
+                dest: '<%= conf.buildDir %>/js/app.js'
+            }
+        },
+
+        uglify: {
+            dist: {
+                src: '<%= conf.buildDir %>/js/*.js',
+                dest: '<%= conf.buildDir %>/js/app.min.js'
+            }
+        },
+
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= conf.imgDir %>/',
+                    src: ['**/*.{png,jpg,gif}'],
+                    dest: '<%= conf.buildDir %>/img'
+                }]
+            }
+        },
+
+        clean: {
+            options: {
+                force: true
+            },
+            old: ['<%= conf.buildDir %>'],
+            new: [
+                '<%= conf.buildDir %>/**/*.js', "!<%= conf.buildDir %>/**/*.min.js",
+                '<%= conf.buildDir %>/**/*.css', "!<%= conf.buildDir %>/**/*.min.css"
+            ]
+        },
+
+        connect: {
+            server: {
+                options: {
+                    hostname: '<%= conf.serverHost %>',
+                    port: '<%= conf.serverPort %>',
+                    base: '<%= conf.serverBase %>',
+                    livereload: '<%= conf.serverLiveReload %>'
+                }
+            }
+        },
+
+        // stub for compass
+        /*        focus: {
+         sass: {
+         include: []
+         },
+         compass: {
+         exclude: []
+         }
+         },*/
+
+        watch: {
+            scripts: {
+                files: ['<%= conf.jsDir %>/*.js'],
+                tasks: ['jshint:beforeconcat', 'concat', /*'jshint:afterconcat',*/ 'uglify', 'clean:new'],
+                options: {
+                    spawn: false,
+                    livereload: true
+                }
+            },
+            css: {
+                files: ['<%= conf.sassDir %>/*.<%= conf.sassExt %>'],
+                tasks: ['sass:dist', 'autoprefixer:dist', 'cssmin:dist'],
+                options: {
+                    spawn: false,
+                    livereload: true
+                }
+            },
+            images: {
+                files: ['<%= conf.imgDir %>/**/*.{png,jpg,gif}'],
+                tasks: ['newer:imagemin'],
+                options: {
+                    spawn: false,
+                    livereload: true
+                }
+            },
+            html: {
+                files: ['<%= conf.htmlDir %>/**/*.html'],
+                tasks: [],
+                options: {
+                    spawn: false,
+                    livereload: true
+                }
+            }
+        }
+    });
+
+    grunt.registerTask('build',
+        ['clean:old', 'sass', 'autoprefixer', 'cssmin', 'concat', 'uglify', 'imagemin', 'clean:new']);
+
+    grunt.registerTask('default', ['connect', 'watch']);
+    grunt.registerTask('j', ['concat', 'jshint:afterconcat']);
+};

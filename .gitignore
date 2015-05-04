@@ -20,8 +20,9 @@ $RECYCLE.BIN/
 # Sass
 .sass-cache/
 
-# composer && bower
+# composer && bower && npm
 vendor/
+node_modules/
 
 # app specific
 sessions/

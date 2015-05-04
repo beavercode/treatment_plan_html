@@ -1,0 +1,209 @@
+//vars
+$b-width: 930px
+
+//share-styles
+%clear-fix:after
+    content: ' '
+    display: table
+    clear: both
+
+%box-size
+    width: $b-width
+    margin: 0 auto
+
+%box-style
+    margin-bottom: 15px
+    background: #FFF
+    box-shadow: 0 0 4px 0 #333
+
+%menu-transition
+    transition: background-color 0.2s ease
+
+%img-style
+    padding: 2px
+    background: #CCC
+    box-shadow: 0 0 4px #533
+
+//main styles
+.header
+    position: relative
+    @extend %box-size
+
+.header__logo
+    width: 629px
+    height: 129px
+    margin: 0 auto
+    background: url('../img/logo.png') no-repeat
+    text-indent: -999px
+
+.search
+    height: 55px
+    @extend %box-style
+
+.search__form
+    margin: 12px 13px 0 0
+    float: right
+
+.search__input
+    //todo need fix for input:-webkit-autofill
+    width: 200px
+    height: 30px
+    padding: 0 55px 0 15px
+    border: 1px solid #efefef
+    border-radius: 2px
+    background: #fafafa url('../img/search.png') no-repeat right
+    font:
+        style: italic
+        size: 1.3em
+    color: #5b5b5b
+    &:focus
+        border-color: #ADA6A0
+// Has 2 levels of folding
+.menu
+    float: left
+    font:
+        weight: bold
+        size: 1.4em
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4)
+    color: #5b5b5b
+
+.menu__list
+    list-style: none
+
+.menu__list-item
+    float: left
+    position: relative
+    min-width: 70px
+    margin: 0 0 0 45px
+    text-align: center
+    @extend %menu-transition
+    &:hover
+        background-color: #eef8e6
+        box-shadow: 0 0 2px #777
+    &.is-active
+        background-color: #ADA6A0
+    &.is-active .menu__list-item-a
+        color: #FFF
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2)
+    //show sub-menu
+    &:hover > .sub-menu__list
+        display: block
+
+.menu__list-item-a
+    display: block
+    height: 35px
+    padding: 20px 10px 0 10px
+    text-decoration: none
+
+.sub-menu__list
+    display: none
+    position: absolute
+    top: 55px
+    left: 0
+    background-color: #eef8e6
+    box-shadow: 0 0 2px #777
+
+.sub-menu__list-item
+    position: relative
+    border-bottom: 1px solid #CCC
+    text-align: center
+    @extend %menu-transition
+    &:hover
+        background-color: #FFF
+    &:hover > .sub-menu__list
+        display: block
+        top: 0
+        left: 129px
+
+.sub-menu__list-item-a
+    display: inline-block
+    min-width: 70px
+    height: 25px
+    padding: 18px 20px 11px
+    text-decoration: none
+
+.slider
+    height: 375px
+    text-align: center
+    @extend %box-style
+
+.slider__img
+    width: 901px
+    height: 343px
+    padding: 15px 0
+
+.preview
+    height: 393px
+    text-align: right
+    font:
+        family: Times New Roman, serif
+        size: 1.3em
+    @extend %box-size
+
+.preview__item
+    float: left
+    overflow: hidden
+    width: 201px
+    height: 355px
+    margin-right: 15px
+    padding: 10px
+    background: #FFF
+    @extend %box-style
+    &:last-child
+        margin-right: 0
+
+.preview__item-a
+
+.preview__item-img
+    width: 196px
+    height: 155px
+    @extend %img-style
+
+.preview__item-title
+    text-align: left
+    margin: 5px 0 5px 15px
+
+.preview__item-desc
+    text-align: left
+    overflow: hidden
+    text-indent: 35px
+    color: #343434
+
+.preview__item-more
+    &:hover
+        text-decoration: none
+
+.article
+    @extend %box-size
+    padding: 15px
+    width: $b-width - 30px
+    font:
+        family: Times New Roman, serif
+        size: 1.4em
+    @extend %box-style
+
+.article__img
+    float: left
+    margin: 0 20px 0 0
+    @extend %img-style
+
+.article__title
+    margin: 5px 0 10px 0
+
+.article__p
+    margin-bottom: 7px
+    text-indent: 2em
+
+//todo
+.article_main
+
+.footer
+    height: 30px
+    padding-top: 20px
+    color: #5b5b5b
+    @extend %box-style
+    @extend %box-size
+
+.footer__copy
+    text-align: center
+    font-size: 1.1em
