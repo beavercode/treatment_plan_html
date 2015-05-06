@@ -91,7 +91,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= conf.imgDir %>/',
-                    src: ['**/*.{png,jpg,gif}'],
+                    src: ['**/*.{png,jpg,gif,ico}'],
                     dest: '<%= conf.buildDir %>/img'
                 }]
             }
@@ -102,10 +102,9 @@ module.exports = function (grunt) {
                 force: true
             },
             old: ['<%= conf.buildDir %>'],
-            new: [
-                '<%= conf.buildDir %>/**/*.js', "!<%= conf.buildDir %>/**/*.min.js",
-                '<%= conf.buildDir %>/**/*.css', "!<%= conf.buildDir %>/**/*.min.css"
-            ]
+            js: ['<%= conf.buildDir %>/**/*.js', "!<%= conf.buildDir %>/**/*.min.js"],
+            old_js: ["<%= conf.buildDir %>/**/*.min.js"],
+            css: ['<%= conf.buildDir %>/**/*.css', "!<%= conf.buildDir %>/**/*.min.css"]
         },
 
         connect: {
@@ -129,10 +128,21 @@ module.exports = function (grunt) {
          }
          },*/
 
+        copy: {
+            tb: {
+                files: [{
+                    expand: true,
+                    src: ['fonts/*'],
+                    dest: '<%= conf.buildDir %>',
+                    filter: 'isFile'
+                }]
+            }
+        },
+
         watch: {
             scripts: {
-                files: ['<%= conf.jsDir %>/*.js'],
-                tasks: ['jshint:beforeconcat', 'concat', /*'jshint:afterconcat',*/ 'uglify', 'clean:new'],
+                files: ['<%= conf.jsDir %>/**/*.js'],
+                tasks: ['jshint:beforeconcat', 'clean:old_js','concat', /*'jshint:afterconcat',*/ 'uglify', 'clean:js'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -140,7 +150,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['<%= conf.sassDir %>/*.<%= conf.sassExt %>'],
-                tasks: ['sass:dist', 'autoprefixer:dist', 'cssmin:dist'],
+                tasks: ['sass:dist', 'autoprefixer:dist', 'cssmin:dist', 'clean:css'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -156,7 +166,7 @@ module.exports = function (grunt) {
             },
             html: {
                 files: ['<%= conf.htmlDir %>/**/*.html'],
-                tasks: [],
+                tasks: ['newer:copy'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -165,9 +175,11 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('build_template',
+        ['clean:old', 'sass', 'autoprefixer', 'cssmin', 'concat', 'uglify', 'imagemin', 'clean:js', 'clean:css']);
+
     grunt.registerTask('build',
-        ['clean:old', 'sass', 'autoprefixer', 'cssmin', 'concat', 'uglify', 'imagemin', 'clean:new']);
+        ['clean:old', 'sass', 'autoprefixer', 'cssmin', 'concat', 'uglify', 'imagemin', 'copy', 'clean:js', 'clean:css']);
 
     grunt.registerTask('default', ['connect', 'watch']);
-    grunt.registerTask('j', ['concat', 'jshint:afterconcat']);
 };

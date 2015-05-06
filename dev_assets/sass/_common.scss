@@ -1,0 +1,31 @@
+// Third-party
+@import "vendor/bootstrap.min";
+@import "vendor/bootstrap-theme.min";
+
+//VARIABLES
+/*
+    B       base                default: 14px
+    XXS	    eXtra eXtra Small
+    XS	    eXtra Small
+    S	    Small
+    M	    Medium
+    L	    Large
+    XL	    eXtra Large
+    XXL	    eXtra eXtra Large */
+$font_b:   14px;
+$font_s:   12px;
+$font_m:   16px;
+$font_l:   18px;
+$font_xl:  24px;
+$font_xxl: 30px;
+
+//HTML
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    //background-color: #eee;
+}

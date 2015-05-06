@@ -1,0 +1,50 @@
+@import "common";
+
+$wLogin: 330px;
+/* -------- */
+
+.login {
+    max-width: $wLogin;
+    padding: 15px;
+    margin: 150px auto 0;
+}
+
+.login__form {
+}
+
+.login__alert {
+    max-width: $wLogin;
+    text-align: center;
+}
+
+.login__heading, {
+    margin-bottom: 10px;
+}
+
+.login__control {
+    @extend .form-control;
+
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.login__control:focus {
+    z-index: 2;
+}
+
+.login__control[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.login__control[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
