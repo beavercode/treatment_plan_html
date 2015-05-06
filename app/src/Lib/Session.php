@@ -16,6 +16,10 @@ class Session
     protected $session;
     protected $duration;
 
+    /**
+     * @param null $savePath
+     * @param int  $duration
+     */
     public function __construct($savePath = null, $duration = 1800)
     {
         if (null !== $savePath) {
@@ -26,10 +30,6 @@ class Session
             //ini_set('session.gc_maxlifetime', $duration);
             $this->duration = $duration;
         }
-    }
-
-    public function __invoke()
-    {
     }
 
     /**
