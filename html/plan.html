@@ -21,8 +21,11 @@
     <div class="header clearfix">
         <nav class="header__nav">
             <ul class="nav nav-pills pull-right">
+                <!--<li class="header__nav-item active" role="presentation"><a href="#">Создать план</a></li>-->
+                <li class="header__nav-item disabled" role="presentation"><a href="#show">Планы</a></li>
+                <li class="header__nav-item disabled" role="presentation"><a href="#doctor">Врачи</a></li>
                 <!--<li class="header__nav-item active" role="presentation"><a href="#">Список планов</a></li>-->
-                <li class="header__nav-item" role="presentation"><a href="#">Выйти</a></li>
+                <li class="header__nav-item" role="presentation"><a href="#logout">Выйти</a></li>
             </ul>
         </nav>
         <h1 class="header__title text-muted">План лечения</h1>
@@ -50,12 +53,12 @@
                 <label for="inputPeriod" class="plan-form__label">Период</label>
                 <input type="text" class="form-control" id="inputPeriod" placeholder="Длительность">
             </div>
-            <button type="submit" class="btn btn-default plan-form__btn-upload">Загрузить прайс</button>
+            <button type="button" class="btn btn-default plan-form__btn-upload">Загрузить прайс</button>
         </div>
         <!-- /stage block -->
 
-        <a href="#" id="add-stage" class="btn btn-primary active" role="button">Добавить этап</a>
-        <button type="button" class="btn btn-success btn-lg plan-form__btn-save">Сохранить</button>
+        <a href="#add-stage" id="add-stage" class="btn btn-primary active" role="button">Добавить этап</a>
+        <button type="submit" class="btn btn-success btn-lg plan-form__btn-save">Сохранить</button>
     </form>
 </div>
 <!-- /plan -->
