@@ -17,6 +17,11 @@ abstract class Controller
      */
     protected $model;
 
+    /**
+     * Constructor.
+     *
+     * @param $router
+     */
     public function __construct($router)
     {
         $this->router = $router;

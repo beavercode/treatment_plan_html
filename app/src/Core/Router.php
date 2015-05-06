@@ -20,6 +20,12 @@ class Router
     protected $router;
     protected $uriBase;
 
+    /**
+     * Constructor.
+     *
+     * @param        $server
+     * @param string $uriBase
+     */
     public function __construct($server, $uriBase = '/')
     {
         $this->server = $server;

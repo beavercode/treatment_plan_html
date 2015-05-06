@@ -11,6 +11,12 @@ use UTI\Model\AuthModel;
  */
 class AuthController extends Controller
 {
+    /**
+     * Constructor.
+     * Uses parent one
+     *
+     * @param $router
+     */
     public function __construct($router)
     {
         parent::__construct($router);
