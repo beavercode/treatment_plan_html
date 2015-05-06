@@ -18,12 +18,17 @@ class Router
      * @var \Aura\Router\Router
      */
     protected $router;
+    protected $uriBase;
 
     public function __construct($server, $uriBase = '/')
     {
         $this->server = $server;
+        $this->uriBase = $uriBase;
+
         // rid of '/base/path/' in REQUEST_URI
-        $this->server['REQUEST_URI'] = System::getRealUri($this->server['REQUEST_URI'], $uriBase);
+        // upd. not necessary, because i can use uriBase when generating the routes
+        //$this->server['REQUEST_URI'] = System::getRealUri($this->server['REQUEST_URI'], $uriBase);
+
         $routerFactory = new RouterFactory;
         $this->router = $routerFactory->newInstance();
     }
@@ -32,23 +37,23 @@ class Router
     {
         # CREATING ROUTES
         //login
-        $this->router->add('auth.login', '/login')
+        $this->router->add('auth.login', $this->uriBase . 'login')
             ->addValues([
                 'controller' => 'Auth',
                 'action'     => 'login'
             ]);
-        $this->router->add('auth.logout', '/logout')
+        $this->router->add('auth.logout', $this->uriBase . 'logout')
             ->addValues([
                 'controller' => 'Auth',
                 'action'     => 'logout'
             ]);
         //plan
-        $this->router->add('plan.main', '/')
+        $this->router->add('plan.main', $this->uriBase)
             ->addValues([
                 'controller' => 'Plan',
                 'action'     => 'main'
             ]);
-        $this->router->add('plan.add', '/add')
+        $this->router->add('plan.add', $this->uriBase . 'add')
             ->addValues([
                 'controller' => 'Plan',
                 'action'     => 'add'
@@ -59,12 +64,12 @@ class Router
 //                'action'     => 'get'
 //            ));
         //optional
-        $this->router->add('plan.show', '/show')
+        $this->router->add('plan.show', $this->uriBase . 'show')
             ->addValues([
                 'controller' => 'Plan',
                 'action'     => 'show'
             ]);
-        $this->router->add('plan.show.name', '/show/{name}')
+        $this->router->add('plan.show.name', $this->uriBase . 'show/{name}')
             ->addTokens([
                 'name' => '\w+'
             ])
@@ -72,14 +77,19 @@ class Router
                 'controller' => 'Plan',
                 'action'     => 'showByName'
             ]);
+
         # MATCHING
-        $path = parse_url($this->server['REQUEST_URI'], PHP_URL_PATH);  // get the incoming request URL path
-        $route = $this->router->match($path, $this->server);  // get the route based on the path and server
+        // get the incoming request URL path
+        // (!) not necessary, because SERVER['REQUEST_URI'] already stands as URI
+        $path = parse_url($this->server['REQUEST_URI'], PHP_URL_PATH);
+        // get the route based on the path and server
+        $route = $this->router->match($path, $this->server);
 
         if (! $route) {
             // no route object was returned
             throw new AppException('No such routes');
-            //header('Location: /plan');
+            //todo header('Location: /plan');
+            //$this->router->generate('auth.login');
         }
         # DISPATCHING
         $params = $route->params;

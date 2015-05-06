@@ -27,7 +27,7 @@ class AuthController extends Controller
         if ($this->model->isLogged()) {
             System::redirect2Url($this->router->generate('plan.main'), $_SERVER);
         }
-        $this->view->render('form_login.php', 'login_template.php', $form);
+        $this->view->render('login_form.php', 'login_template.php', $form);
     }
 
     /**

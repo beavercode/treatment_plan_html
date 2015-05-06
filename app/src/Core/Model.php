@@ -27,6 +27,6 @@ abstract class Model
      */
     public function isLogged()
     {
-        return $this->session->get('auth') === 'in';
+        return (bool) $this->session->get('auth');
     }
 }

@@ -18,7 +18,7 @@
 
 return [
     'app' => [
-        'uri_base' => '',
+        'uri_base' => '/',
         'tpl'      => 'storage/tpl/',
         'session'  => [
             'dir'      => 'storage/sessions/',

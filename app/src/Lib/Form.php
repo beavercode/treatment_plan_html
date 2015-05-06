@@ -61,29 +61,35 @@ class Form
      * Set form field as invalid
      *
      * @param        $field
-     * @param string $text
+     * @param string $message
      */
-    public function setInvalid($field, $text = '')
+    public function setInvalid($field, $message = '')
     {
-        $this->validate[$field] = $text;
+        $this->validate[$field] = $message;
     }
 
     /**
      * Check if field is invalid or if there exists a fields that need validation
      *
-     * @param null $filed
-     * @return bool|string
+     * @param null $field
+     * @return array|bool
      */
-    public function isInvalid($filed = null)
+    public function isInvalid($field = null)
     {
-        if ($filed) {
-            return array_key_exists($filed, $this->validate)
-                //todo rid of html in logic
-                ? ' <span style="color:red">' . $this->validate[$filed] . '</span>'
+        if ($field) {
+            return array_key_exists($field, $this->validate)
+                ? $this->validate[$field]
                 : false;
         } else {
-            return (bool)$this->validate;
+            return $this->validate;
         }
+
+//        return $field ? array_key_exists($field, $this->validate) : (bool)$this->validate;
+    }
+
+    public function errorMessage($field)
+    {
+        return $this->validate[$field];
     }
 
     /**
@@ -103,6 +109,6 @@ class Form
      */
     public function isSubmit()
     {
-        return array_key_exists($this->getName(), $_POST);
+        return isset($_POST[$this->getName()]);
     }
 }

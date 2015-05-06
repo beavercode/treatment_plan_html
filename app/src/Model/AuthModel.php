@@ -7,8 +7,8 @@ use UTI\Lib\Form;
 class AuthModel extends Model
 {
     /**
-     * Process form and set flag auth=in(logged in) if all is ok
-     * Otherwise form.validate populated with an errors
+     * Process form and set flag auth=in(logged in) if all is OK
+     * Otherwise set error message for field
      *
      * @return Form
      */
@@ -20,24 +20,24 @@ class AuthModel extends Model
         if ($form->isSubmit()) {
             //login check
             if (! $form->getValue('login')) {
-                $form->setInvalid('login', 'Field required.');
+                $form->setInvalid('login', 'Введите "Логин", пожалуйста.');
             } elseif ($form->getValue('login') !== $userInfo['login']) {
-                $form->setInvalid('login', 'Wrong login value.');
+                $form->setInvalid('login', 'Введенный "Логин" неправильный.');
             }
             //pass check
             if (! $form->getValue('password')) {
-                $form->setInvalid('password', 'Field required.');
+                $form->setInvalid('password', 'Введите "Пароль", пожалуйста.');
             } elseif ((int)$form->getValue('password') !== $userInfo['password']) {
-                $form->setInvalid('password', 'Wrong password value.');
+                $form->setInvalid('password', 'Введенный "Пароль" неправильный.');
             }
             //no errors there
             if (! $form->isInvalid()) {
                 $this->session->set('auth', 'in');
             }
         } else {
-            //default value
+            //default values
             $form->setValue('login', 'admin');
-            $form->setValue('password', '1');
+            $form->setValue('password', 123);
         }
 
         return $form;
@@ -60,7 +60,7 @@ class AuthModel extends Model
     {
         return [
             'login'    => 'admin',
-            'password' => 1
+            'password' => 123
         ];
     }
 }

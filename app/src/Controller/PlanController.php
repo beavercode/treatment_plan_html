@@ -15,6 +15,7 @@ class PlanController extends Controller
     {
         parent::__construct($router);
         $this->model = new PlanModel();
+
         if (! $this->model->isLogged()) {
             System::redirect2Url($this->router->generate('auth.login'), $_SERVER);
         }
@@ -24,9 +25,10 @@ class PlanController extends Controller
     {
         $data['form'] = $this->model->processForm();
         $data['links']['logout'] = $this->router->generate('auth.logout');
+        //todo written above
 
         //todo fill the form, show action menu
-        $this->view->render('form_plan.php', 'plan_template.php', $data);
+        $this->view->render('plan_form.php', 'plan_template.php', $data);
     }
 
     public function add($params)

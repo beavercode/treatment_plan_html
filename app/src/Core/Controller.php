@@ -7,7 +7,14 @@ abstract class Controller
      * @var \Aura\Router\Router
      */
     protected $router;
+    /**
+     * @var \UTI\Core\View
+     */
     protected $view;
+
+    /**
+     * @var \UTI\Core\Model
+     */
     protected $model;
 
     public function __construct($router)

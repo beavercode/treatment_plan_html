@@ -30,7 +30,6 @@ class Session
 
     public function __invoke()
     {
-
     }
 
     /**
@@ -60,10 +59,10 @@ class Session
             ? ($this->session ?: null)
             : (array_key_exists($key, $this->session) ? $this->session[$key] : null);*/
         if (null === $key) {
-            return $this->session ? : null;
+            return $this->session ?: null;
         }
 
-        return isset($this->session[$key]) ? $this->session[$key] : null;
+        return array_key_exists($key, $this->session) ? $this->session[$key] : null;
     }
 
     /**
@@ -101,6 +100,11 @@ class Session
         session_destroy();
     }
 
+    /**
+     * Custom session duration
+     *
+     * @param $duration
+     */
     protected function correctDuration($duration)
     {
         if ($this->get('last_seen') && (time() - $this->get('last_seen') > $duration)) {
