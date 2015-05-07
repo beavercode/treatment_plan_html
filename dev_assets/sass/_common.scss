@@ -1,6 +1,7 @@
 // Third-party
 @import "vendor/bootstrap.min";
 @import "vendor/bootstrap-theme.min";
+@import "vendor/bootstrap-select.min";
 
 //VARIABLES
 /*
@@ -20,10 +21,8 @@ $font_xl:  24px;
 $font_xxl: 30px;
 
 //HTML
-
 html {
-    position: relative;
-    min-height: 100%;
+
 }
 
 body {
