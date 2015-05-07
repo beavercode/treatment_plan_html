@@ -16,55 +16,136 @@
     <title>План лечения</title>
 </head>
 <body>
-<!-- plan -->
-<div class="container plan">
-    <div class="header clearfix">
-        <nav class="header__nav">
-            <ul class="nav nav-pills pull-right">
-                <!--<li class="header__nav-item active" role="presentation"><a href="#">Создать план</a></li>-->
-                <li class="header__nav-item disabled" role="presentation"><a href="#show">Планы</a></li>
-                <li class="header__nav-item disabled" role="presentation"><a href="#doctor">Врачи</a></li>
-                <!--<li class="header__nav-item active" role="presentation"><a href="#">Список планов</a></li>-->
-                <li class="header__nav-item" role="presentation"><a href="#logout">Выйти</a></li>
-            </ul>
-        </nav>
-        <h1 class="header__title text-muted">План лечения</h1>
-    </div>
 
-    <form class="plan-form" action="#action">
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label plan-form__label">Введите имя</label>
+<div class="container">
+    <div class="row">
+        <div class="plan col-lg-8 col-lg-offset-2">
+            <!-- header -->
+            <header class="header">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand title" href="#main-page">План лечения</a>
+                        </div>
 
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputName" placeholder="Фамилия Имя Отчество" autofocus>
+                        <!-- navbar-collapse -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <!--<li class="dropdown">-->
+                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+                                <!--<ul class="dropdown-menu" role="menu">-->
+                                <!--<li><a href="#">Action</a></li>-->
+                                <!--<li><a href="#">Another action</a></li>-->
+                                <!--<li><a href="#">Something else here</a></li>-->
+                                <!--<li class="divider"></li>-->
+                                <!--<li><a href="#">Separated link</a></li>-->
+                                <!--</ul>-->
+                                <!--</li>-->
+                                <!--<li><a href="#doctors">Врачи</a></li>-->
+                                <!--<li><a class="disabled" href="#plans">Планы</a></li>-->
+                                <li><a href="#logout">Выйти</a></li>
+                            </ul>
+
+                            <!-- search -->
+                            <!--<form class="navbar-form navbar-right" role="search">-->
+                            <!--<div class="form-group">-->
+                            <!--<input type="text" class="form-control" placeholder="Search">-->
+                            <!--</div>-->
+                            <!--<button type="submit" class="btn btn-default">Поиск</button>-->
+                            <!--</form>-->
+                            <!-- /search -->
+                        </div>
+                        <!-- /navbar-collapse -->
+                    </div>
+                </nav>
+            </header>
+            <!-- /header -->
+
+            <!-- Plan form -->
+            <form class="form-horizontal form" role="form" name="plan" action="#plan-submit" method="get">
+                <!-- Common info -->
+                <div class="form-group col-sm-7">
+                    <label for="inputName" class="col-sm-4 control-label">Введите имя</label>
+
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" id="inputName" placeholder="Фамилия Имя Отчество">
+                    </div>
                 </div>
-            </div>
-        </div>
-        <h3 class="plan-form__title">Введите этапы</h3>
+                <div class="form-group col-sm-5">
+                    <label for="inputDoctor" class="col-sm-4 control-label">Врач</label>
 
-        <!-- stage block -->
-        <div class="form-inline plan-form__inline">
-            <div class="form-group plan-form__group">
-                <label for="inputStage" class="plan-form__label">Название</label>
-                <input type="text" class="form-control" id="inputStage" placeholder="Этап лечения">
-            </div>
-            <div class="form-group plan-form__group">
-                <label for="inputPeriod" class="plan-form__label">Период</label>
-                <input type="text" class="form-control" id="inputPeriod" placeholder="Длительность">
-            </div>
-            <button type="button" class="btn btn-default plan-form__btn-upload">Загрузить прайс</button>
-        </div>
-        <!-- /stage block -->
+                    <div class="col-sm-8">
+                        <select id="inputDoctor" class="selectpicker show-tick" data-width="100%">
+                            <option value="1">Катаева В.</option>
+                            <option value="2">Петров И.</option>
+                            <option value="3">Ильф И.</option>
+                            <option value="4">Блок А.</option>
+                        </select>
+                        <!--<input type="text" class="form-control" id="inputDoctor" placeholder="Ведущий врач">-->
+                    </div>
+                </div>
+                <!-- /Common info -->
 
-        <a href="#add-stage" id="add-stage" class="btn btn-primary active" role="button">Добавить этап</a>
-        <button type="submit" class="btn btn-success btn-lg plan-form__btn-save">Сохранить</button>
-    </form>
+                <!-- Title -->
+                <div class="form-group col-sm-12">
+                    <hr/>
+                    <h3 class="title">Введите этапы</h3>
+                </div>
+                <!-- /Title -->
+
+                <!-- Stage -->
+                <div class="form-group col-sm-5">
+                    <label for="inputStage" class="col-sm-4 control-label">Название</label>
+                    <div class="col-sm-8">
+                        <select id="inputStage" class="selectpicker show-tick " data-width="100%">
+                            <option value="1">Имплантация</option>
+                            <option value="2">Ортодонтия</option>
+                            <option value="3">Отбеливание</option>
+                            <option value="4">Печеньки!</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label for="inputPeriod" class="col-sm-4 control-label">Период</label>
+
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputPeriod" placeholder="Длительность лечения">
+                    </div>
+                </div>
+                <div class="form-group col-sm-2">
+                    <div class="col-sm-12">
+                        <a href="#upload-price" class="btn btn-default">Загрузить прайс</a>
+                    </div>
+                </div>
+                <!-- /Stage -->
+
+                <!-- Add stage -->
+                <div class="form-group col-sm-10 col-sm-offset-2">
+                    <a href="#add-stage" id="add-stage" class="btn btn-primary active" role="button">Добавить этап</a>
+                </div>
+                <!-- /Add stage -->
+
+                <!-- Save plan -->
+                <div class="form-group col-sm-10 col-sm-offset-2">
+                    <button type="submit" class="btn btn-success btn-lg">Сохранить план лечения
+                    </button>
+                </div>
+                <!-- /Save plan -->
+            </form>
+            <!-- /Plan form -->
+
+
+        </div>
+    </div>
 </div>
-<!-- /plan -->
-<footer class="footer">
-    <p class="footer__text">&copy; 2015</p>
-</footer>
 <script src="../assets/js/app.min.js"></script>
 </body>
 </html>
