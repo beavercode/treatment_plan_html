@@ -22,7 +22,7 @@ return [
         'tpl'      => 'storage/tpl/',
         'session'  => [
             'dir'      => 'storage/sessions/',
-            'duration' => 36000
+            'duration' => 32400
         ],
         'log'      => 'storage/logs/',
         'docx'     => 'storage/docx/',

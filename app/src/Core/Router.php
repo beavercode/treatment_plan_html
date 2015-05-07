@@ -69,7 +69,8 @@ class Router
 //                'controller' => 'Plan',
 //                'action'     => 'get'
 //            ));
-        //optional
+
+        // OPTIONAL OPTIONAL OPTIONAL OPTIONAL OPTIONAL OPTIONAL OPTIONAL OPTIONAL
         $this->router->add('plan.show', $this->uriBase . 'show')
             ->addValues([
                 'controller' => 'Plan',
@@ -82,6 +83,18 @@ class Router
             ->addValues([
                 'controller' => 'Plan',
                 'action'     => 'showByName'
+            ]);
+
+        // add doctor name and photo
+        $this->router->add('doctor.main', $this->uriBase . 'doctor')
+            ->addValues([
+                'controller' => 'Doctor',
+                'action'     => 'main'
+            ]);
+        $this->router->add('doctor.add', $this->uriBase . 'doctor/add')
+            ->addValues([
+                'controller' => 'Doctor',
+                'action'     => 'add'
             ]);
 
         # MATCHING

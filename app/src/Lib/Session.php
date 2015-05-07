@@ -7,6 +7,8 @@ namespace UTI\Lib;
  * http://phpclub.ru/detail/article/sessions
  * http://php.net/manual/en/session.configuration.php
  * http://www.softtime.ru/bookphp/gl8_1.php
+ * https://solutionfactor.net/blog/2014/02/08/implementing-session-timeout-with-php/
+ * http://stackoverflow.com/questions/3684620/is-possible-to-keep-session-even-after-the-browser-is-closed/3684674#3684674
  *
  * Class Session
  * @package UTI\Lib
@@ -27,11 +29,9 @@ class Session
         if (null !== $savePath) {
             session_save_path($savePath);
         }
-
-        if ($duration) {
-            //ini_set('session.gc_maxlifetime', $duration);
-            $this->duration = $duration;
-        }
+        $this->duration = $duration;
+        //ini_set('session.cookie_lifetime', $this->duration); //don't use it, session must live until browser is closed
+        ini_set('session.gc_maxlifetime', $this->duration);
     }
 
     /**
@@ -42,8 +42,9 @@ class Session
     public function run()
     {
         $state = session_start();
-        $this->session =& $_SESSION;    // point by reference to $_SESSION global array
-        $this->correctDuration($this->duration);
+        // for less super global variables usage
+        $this->session =& $_SESSION;
+        $this->timeout($this->duration);
 
         return $state;
     }
@@ -92,7 +93,7 @@ class Session
             setcookie(
                 session_name(),
                 '',
-                time() - 42000,
+                time() - $this->duration,
                 $params['path'],
                 $params['domain'],
                 $params['secure'],
@@ -107,11 +108,12 @@ class Session
      *
      * @param $duration
      */
-    protected function correctDuration($duration)
+    protected function timeout($duration)
     {
-        if ($this->get('last_seen') && (time() - $this->get('last_seen') > $duration)) {
+        $time = time();
+        if ($this->get('last_seen') && ($time - $this->get('last_seen') > $duration)) {
             $this->halt();
         }
-        $this->set('last_seen', time());
+        $this->set('last_seen', $time);
     }
 }
